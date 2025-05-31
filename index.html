@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="Explora la riqueza de Colombia y descubre lo mejor de Medellín, Bogotá, Cartagena, Santa Marta, Bucaramanga y San Andrés.">
+  <meta name="keywords" content="tiquetes baratos, vuelos baratos, viajes baratos, ofertas viajes, buscar vuelos, viajes colombia, viajes a medellin, viajes a bogota, vuelos a medellin, vuelos a bogota, vuelos a cartagena, vuelos a santa marta, vuelos a bucaramanga, vuelos a san andres">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Descubre Colombia: Turismo y Viajes Inolvidables</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./boton_files/css2" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f2f2f2;
+    }
+    #captchaOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(211, 211, 211, 0.8);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+    }
+    .container h1 {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 40px;
+    }
+    .container p {
+      margin: 5px 0;
+    }
+    .captchat {
+      position: relative;
+      margin-top: 15px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .captchat img {
+      width: 67%;
+      height: auto;
+      display: block;
+    }
+    .captchat p {
+      font-size: 11px;
+      color: #999;
+      text-align: left;
+      line-height: 1.2;
+      margin: 3px auto;
+    }
+    .draggable {
+      width: 20px;
+      height: 20px;
+      background-color: transparent;
+      position: absolute;
+      top: 20px;
+      left: 12px;
+      cursor: pointer;
+    }
+    .draggable.checked::after {
+      content: "✓";
+      position: absolute;
+      top: 17%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      color: #58c738;
+      font-size: 29px;
+      font-weight: bold;
+    }
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #2430dd;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      margin: 15px auto;
+      display: none;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    #continueBtn {
+      margin: 10px auto 0;
+      padding: 6px 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(45deg, #428bfd, #0c3fa6);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: none;
+    }
+    #continueBtn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    }
+    #successMsg {
+      display: none;
+      font-size: 14px;
+      color: #376fd8;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div id="captchaOverlay">
+    <div class="container">
+      <h1>Verifica que no eres un robot</h1>
+
+      <div class="captchat">
+        <img src="./boton_files/cap.jpg" alt="Imagen de Captchat">
+        <p id="verificacionMsg" style="font-size:13px; color:#ff0000; text-align:left; margin: 1px 0;">
+          Marca la casilla para confirmar que eres una persona real.
+        </p>
+        <hr style="border: none; border-top: 1px solid #ccc; margin: 10px 0;">
+        <p>
+          Para garantizar una experiencia segura para todos nuestros visitantes, utilizamos esta verificación que nos permite confirmar que eres una persona real. Esta medida protege nuestro sitio contra accesos automatizados y asegura que tu información y navegación se mantengan siempre seguras.
+        </p> 
+        <div class="draggable" id="check"></div>
+      </div>
+
+      <div class="loader" id="loader"></div>
+      <button id="continueBtn">Continuar</button>
+      <p id="successMsg">Validación completada redirigiendo…</p>
+    </div>
+  </div>
+
+  <script>
+    const check = document.getElementById('check');
+    const loader = document.getElementById('loader');
+    const continueBtn = document.getElementById('continueBtn');
+    const successMsg = document.getElementById('successMsg');
+    const verificacionMsg = document.getElementById('verificacionMsg');
+
+    check.addEventListener('click', () => {
+      check.classList.toggle('checked');
+      if (check.classList.contains('checked')) {
+        loader.style.display = 'block';
+        continueBtn.style.display = 'none';
+        successMsg.style.display = 'none';
+        setTimeout(() => {
+          loader.style.display = 'none';
+          continueBtn.style.display = 'block';
+          verificacionMsg.style.display = 'none';
+        }, 2000);
+      } else {
+        loader.style.display = 'none';
+        continueBtn.style.display = 'none';
+        successMsg.style.display = 'none';
+        verificacionMsg.style.display = 'block';
+      }
+    });
+
+    continueBtn.addEventListener('click', () => {
+      continueBtn.style.display = 'none';
+      successMsg.style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('captchaOverlay').style.display = 'none';
+        window.location.href = "";
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
